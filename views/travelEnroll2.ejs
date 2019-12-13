@@ -1,0 +1,61 @@
+<%//index.ejs에서 사용됨
+//이젠 섹션에서 가져온 아이디.
+String userID = null;
+//request에서 가져온 여행일자
+int travelTatalSpanTime=0;
+
+%>
+
+<%
+	if(session.getAttribute("userID")!=null){userID = (String) session.getAttribute("userID");}
+
+	if(request.getParameter("travelTatalSpanTime")!=null)
+	{
+		try{travelTatalSpanTime = Integer.parseInt(request.getParameter("travelTatalSpanTime"));}
+		catch(Exception e){System.out.println("비정상적인 접근 또는 검색에러");}
+	}
+	else
+	{
+		System.out.println("비정상적인 접근 또는 검색에러");
+	}
+%>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>당신의 여행이야기를 들려주세요.</title>
+		<style>
+			body			{	height:100%;	width: 1000px;}
+			label			{display: inline-block;	width: 400px;}
+			#MainConsult	{width: 1500px;	height:500px;}
+		</style>
+	</head>
+	
+	<body >
+			<form action="./travelEnrollAction.ejs" method="post"   ENCTYPE="multipart/form-data">
+				<label>게시판분류</label>
+				<select name = "travelTatalSpanTime" style="display: none;"><option value = <%=travelTatalSpanTime%> style="display:none"></option></select>
+				<select name = "travelClassfy" >
+					<option value="tripPlan">여행계획</option>	
+					<option value="tripLog">여행일지</option>
+				</select><br>
+				<label>제목</label>
+				<input type = "text" name = "travelTitle" class = "form-control" maxlength = "30" style = "width:300px"><br />
+				<label>여행시작일</label><%19940415같이 8자리%>
+				<input type = "number" name = "travelStartDate" class = "form-control" min = "19000101" nax="21000101" style = "width:300px"><br />
+				<label>여행국가</label>
+				<input type = "text" name = "travelCountry" class = "form-control" maxlength = "30" style = "width:300px"><br />
+				<label>작성자이름</label>
+				<select name = "travelWriter" ><option value = "<%=userID%>" selected><%=userID%></option></select><br>
+				<%<for(int i=0;i<travelTatalSpanTime;i++){%>
+				
+					<label><%=i%>일차</label>
+<%지도들어갈 자린데 지도 핑찍으면 저장 가능한가요?%>
+					<textarea  name = "travelContent<%=i%>" maxlength = "4096" style = "height:180px; width:700px;"></textarea><br/>
+
+				<%}%>
+				
+				
+				<input type = "submit" value = "등록하기" style = "position:absolute; left:650px;">
+			</form>
+			<a href = "./tavelErnoll.ejs"><input type ="button" value = "취소"style = "position:absolute; left:10px;"> </a>
+</html>

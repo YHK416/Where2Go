@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>테스트 인덱스 페이지</title>
+</head>
+<body>
+	<h1>테스트 중인 인덱스 페이지</h1>
+	<p>파이어베이스 확인 요</p>
+</body>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.5.0/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCTMbPV8BsmuGgzf97n-At-1CnOV4n0KRA",
+    authDomain: "wtgo-17e32.firebaseapp.com",
+    databaseURL: "https://wtgo-17e32.firebaseio.com",
+    projectId: "wtgo-17e32",
+    storageBucket: "wtgo-17e32.appspot.com",
+    messagingSenderId: "442941794543",
+    appId: "1:442941794543:web:079c3981e37f3d6d77531a",
+    measurementId: "G-NFMN1S3123"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  
+  var newPostKey = firebase.database().ref().child('posts').push().key;
+  
+  var postData = {
+    brdno: newPostKey,
+    brdwriter:"홍길동",
+    brdtitle:"게시판 제목",
+    brdmemo:"게시물 내용",
+    brddate: Date.now()
+  };
+ 
+  var updates = {};
+  updates['/board/' + newPostKey] = postData;
+ 
+  firebase.database().ref().update(updates);
+
+</script>
+
+</html>
